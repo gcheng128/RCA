@@ -1,10 +1,8 @@
 # Risk-Concealment Attacks (RCA)
 
-Official codebase for the paper:
+Official codebase for the paper: **Uncovering the Vulnerability of Large Language Models in the Financial Domain via Risk Concealment**
 
-**Uncovering the Vulnerability of Large Language Models in the Financial Domain via Risk Concealment**
-
-> **TL;DR:** We propose **Risk-Concealment Attacks (RCA)** - a multi-turn red-teaming framework that adaptively conceals malicious financial intent across dialogue turns to elicit high-risk outputs from LLMs, even under strict alignment. RCA achieves **97.51% ASR on GPT-4.1**, **97.56% on OpenAI o1**, and reveals critical gaps in financial LLM safety.
+**TL;DR:** We propose **Risk-Concealment Attacks (RCA)** - a multi-turn red-teaming framework that adaptively conceals malicious financial intent across dialogue turns to elicit high-risk outputs from LLMs, even under strict alignment. RCA achieves an average attack success rate (ASR) of **93.18%** across 9 mainstream LLMs, including **98.28% on GPT-4.1** and **97.56% on OpenAI o1**, revealing critical gaps in financial LLM safety.
 
 
 ## 📌 Overview
@@ -17,10 +15,12 @@ To evaluate this vulnerability, we introduce:
 - **⚖️ Comprehensive Evaluation:** Extensive experiments on 9 leading LLMs (e.g., GPT-4.1, OpenAI o1, Claude Sonnet 3.7, Claude Sonnet 4, Qwen3 235B) demonstrating the effectiveness and transferability of RCA.
 
 ### RCA (Risk-Concealment Attacks)
-![rca_framework](assets/example.png) <div align="center">Figure 1. Comparison between explicit and implicit risks in prompt inputs. LLMs reliably reject clearly unethical requests but struggle with detecting subtle regulatory non-compliance. </div>
+![rca_framework](assets/example.png) <div align="center">Figure 1. Comparison between explicit and implicit risks in prompt inputs. </div>
+
 As illustrated in Figure 1, LLMs demonstrate strong safeguards against explicit harmful prompts, such as requests related to suicide or bomb-making, consistently responding with firm refusals. However, when confronted with prompts situated in regulatory gray areas, such as tax minimization through offshore entities, the model often fails to issue a rejection and instead produces helpful responses. This highlights a critical vulnerability: prompts that maintain a facade of legality or professional tone may evade detection, even when they encode high-risk financial intent that could violate regulatory norms.
 
 ![rca_framework](assets/rca_framework.png) <div align="center">Figure 2. Overview of RCA framework. </div>
+
 The RCA framework consists of two phases. In **Phase 1**, we construct an initial prompt using a structured template that encodes risky financial intent. In **Phase 2**, we iteratively refine follow-up queries based on feedback, such as jailbreak indicators and dialogue history from the Judge agent. This adaptive process reduces perceived risk while gradually eliciting actionable, compliance-violating responses from the target LLM.
 
 
