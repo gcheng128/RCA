@@ -1,5 +1,44 @@
 """
-This script implements the Risk-Concealment Attacks (RCA) framework to evaluate the robustness of various Large Language Models (LLMs) against adversarial prompts in financial area.
+Risk-Concealment Attacks (RCA)
+====================================================
+This script implements the Risk-Concealment Attacks (RCA) framework to evaluate the robustness of various Large Language Models (LLMs) against adversarial prompts in the financial area.
+
+Main Functions
+--------------
+- generate_initial_prompt():
+    Use an auxiliary LLM model to turn a harmful query into a structured,
+    compliance-styled initial prompt.
+
+- generate_follow_up_question():
+    Create adaptive follow-up queries based on dialogue history, round number,
+    and whether the target LLM refused.
+
+- call_target_llm():
+    Query the target model with retries; returns its response.
+
+- assess_attack_success():
+    Ask a judgment LLM model to evaluate if the dialogue produced a successful
+    jailbreak (returns JSON with success flag + reason).
+
+- run_rca_attack():
+    Orchestrates a single RCA attack:
+      1. Generate initial prompt
+      2. Query target
+      3. Iteratively refine follow-ups
+      4. Judge after each round, stop on success
+    Returns judgment result, conversation history, and rounds used.
+
+- run_rca_experiments():
+    Run RCA on a dataset:
+      · Load harmful queries
+      · Loop over target models
+      · Call run_rca_attack for each query
+      · Collect stats, save CSV results with utils.save_experiment()
+
+Outputs
+-------
+- Logs of per-model success rates
+- CSV summaries by round and by label
 """
 from openai import OpenAI, RateLimitError
 import time
